@@ -12,10 +12,11 @@
 
 
 ## API
-see [./lib/powerdns.js]
+
+see https://github.com/develjs/powerdns-rest/blob/master/specs/create_zone.js
 
 ## See also
 PowerDNS documentation:  
- [https://doc.powerdns.com/md/httpapi/api_spec/]  
- [https://doc.powerdns.com/md/httpapi/README/]  
+ https://doc.powerdns.com/md/httpapi/api_spec/  
+ https://doc.powerdns.com/md/httpapi/README/  
 
