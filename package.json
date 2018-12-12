@@ -1,0 +1,22 @@
+{
+  "name": "powerdns",
+  "version": "1.0.0",
+  "description": "Node.js wrapper for PowerDNS REST API",
+  "keywords": [
+    "powerdns",
+    "dns",
+    "pdns",
+    "rest"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "init": "node tools/init.script.js",
+    "test": "node specs/create_zone.js"
+  },
+  "author": "develjs@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}
