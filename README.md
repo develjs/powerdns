@@ -13,7 +13,7 @@
 
 ## API
 
-see https://github.com/develjs/powerdns-rest/blob/master/specs/create_zone.js
+see lib/powerdns.js
 
 ## See also
 PowerDNS documentation:  
