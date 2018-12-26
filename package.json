@@ -12,7 +12,8 @@
   "scripts": {
     "start": "node index.js",
     "init": "node tools/init.script.js",
-    "test": "node specs/create_zone.js"
+    "test": "node specs/create_zone.js",
+    "lookup": "node specs/lookup-bulk.js"
   },
   "author": "develjs@gmail.com",
   "license": "MIT",

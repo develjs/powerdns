@@ -1,0 +1,22 @@
+[
+    {"domain": "a.com", "ip": "10.0.0.2"},
+    {"domain": "b.com", "ip": "10.0.0.2"},
+    {"domain": "c.com", "ip": "10.0.0.2"},
+    {"domain": "d.com", "ip": "10.0.0.2"},
+    {"domain": "e.com", "ip": "10.0.0.2"},
+    {"domain": "f.com", "ip": "10.0.0.2"},
+    {"domain": "g.com", "ip": "10.0.0.2"},
+    {"domain": "h.com", "ip": "10.0.0.2"},
+    {"domain": "i.com", "ip": "10.0.0.2"},
+    {"domain": "j.com", "ip": "10.0.0.2"},
+    {"domain": "a.a", "ip": "10.0.0.1"},
+    {"domain": "b.a", "ip": "10.0.0.1"},
+    {"domain": "c.a", "ip": "10.0.0.1"},
+    {"domain": "d.a", "ip": "10.0.0.1"},
+    {"domain": "e.a", "ip": "10.0.0.1"},
+    {"domain": "f.a", "ip": "10.0.0.1"},
+    {"domain": "g.a", "ip": "10.0.0.1"},
+    {"domain": "h.a", "ip": "10.0.0.1"},
+    {"domain": "i.a", "ip": "10.0.0.1"},
+    {"domain": "j.a", "ip": "10.0.0.1"}
+]

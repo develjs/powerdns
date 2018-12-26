@@ -73,6 +73,7 @@ PowerDNS documentation:
     sudo pdnsutil create-zone example.com ns1.example.com
     sudo pdnsutil add-record example.com ns1 A 192.168.1.1
     sudo pdnsutil add-record example.com ns2 A 192.168.1.2
+    sudo pdnsutil set-kind example.com slave
 
     # Errors:
     sudo: unable to resolve host ip-172-12-34-56: Resource temporarily unavailable
