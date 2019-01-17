@@ -123,7 +123,7 @@ PowerDNS documentation:
 
     # base configuration for slave
     # main zone name and master IP
-    sudo pdnsutil create-slave-zone 8b.io 192.168.1.1  
+    sudo pdnsutil create-slave-zone ns.server.net 10.0.0.1  
     # retrive zone
     sudo pdns_control retrieve 8b.io 
     
