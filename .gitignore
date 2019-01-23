@@ -2,7 +2,7 @@
 /.codelite
 /.tern-project
 /.tern-port
-
+/*.workspace
 # Logs
 logs
 *.log
