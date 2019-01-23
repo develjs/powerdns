@@ -11,13 +11,17 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "rest": "node tools/rest.server.js --port 3000",
     "init": "node tools/init.script.js",
-    "test": "node specs/create_zone.js",
+    "test": "node specs/pdns-test.js",
     "lookup": "node specs/lookup-bulk.js"
   },
   "author": "develjs@gmail.com",
   "license": "MIT",
   "dependencies": {
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "express": "^4.16.4"
   }
 }

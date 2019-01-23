@@ -47,6 +47,7 @@ PowerDNS documentation:
     # configure PowerDNS
     sudo nano /etc/powerdns/pdns.conf
 
+    # enable REST API access
     api=yes
     # insert generated key
     api-key=qwertyuiopasdfghjklzxcvbnm1234567890
@@ -54,6 +55,7 @@ PowerDNS documentation:
     webserver-address=192.168.1.1
     # webserver/API access is only allowed from these subnets
     webserver-allow-from=127.0.0.1,::1,192.168.1.0/24
+    
     # used when creating SOA dns records
     default-soa-name=ns1.example.com
     # allow zonetransfers to slave
@@ -111,7 +113,16 @@ PowerDNS documentation:
     slave=yes
     slave-cycle-interval=60
     disable-axfr=yes
-
+    
+    # enable REST API access
+    api=yes
+    # insert generated key
+    api-key=qwertyuiopasdfghjklzxcvbnm1234567890
+    # address of IP interface to listen on (use ifconfig info, or "Private IPs" for AWS)
+    webserver-address=192.168.1.2
+    # webserver/API access is only allowed from these subnets
+    webserver-allow-from=127.0.0.1,::1,192.168.1.0/24
+    
     # link to master
     # register master in mysql DB (for example: ns.server.net 10.0.0.1)
     sudo mysql -u root -D pdns -p 
@@ -125,5 +136,15 @@ PowerDNS documentation:
     # main zone name and master IP
     sudo pdnsutil create-slave-zone ns.server.net 10.0.0.1  
     # retrive zone
-    sudo pdns_control retrieve 8b.io 
+    sudo pdns_control retrieve ns.server.net
     
+
+## Useful commands
+
+    sudo pdnsutil list-all-zones
+    sudo nano /etc/powerdns/pdns.conf
+    sudo service pdns restart
+    sudo netstat -antup
+
+
+## Sources

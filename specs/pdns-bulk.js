@@ -11,9 +11,10 @@ let pdns = new PowerDNS(config.host, config.port, config.token, [config.ns1+'.',
 
 let startTime;
 let zonesCount;
+
 pdns.getZones()
 // make run funcs
-.then(zones=>{
+.then(zones => {
     zonesCount = zones.length;
     startTime = Date.now();
     console.log('--- start ---');
