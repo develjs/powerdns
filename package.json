@@ -14,7 +14,7 @@
     "rest": "node tools/rest.server.js --port 3000",
     "init": "node tools/init.script.js",
     "test": "node specs/pdns-test.js",
-    "lookup": "node specs/lookup-bulk.js"
+    "lookup": "node specs/pdns-bulk.js"
   },
   "author": "develjs@gmail.com",
   "license": "MIT",

@@ -148,3 +148,21 @@ PowerDNS documentation:
 
 
 ## Sources
+pdns-config.json  - PowerDNS access configuration
+
+/lib                    - libraries  
+/lib/powerdns.js        - main library to access any PowerDNS server by native REST API  
+/lib/rest-router.js     - Express.js router for create REST-service to manage PowerDNS servers  
+/lib/rest-wrap.js       - example for using Express.js router API remotly  
+
+/specs                  - tests  
+/specs/pdns-test.js     - Main test for creating, lookuping and removing zones (npm run test)    
+/specs/domains.json     - test domains list  
+/specs/pdns-bulk.js     - test for pdns domains lookup (npm run lookup)  
+/specs/rest-test.js     - Main test for REST-router  
+/specs/misc.js          - miscellaneous helper functions  
+
+/tools                  - help tools  
+/tools/init.script.js   - init script for create pdns-config.json
+/tools/rest.server.js   - simple express server for run rest router  
+/tools/cleandns.sh      - PowerDNS slave cleanup script, remove domains deleted from master  
