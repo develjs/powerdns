@@ -1,93 +1,87 @@
 #! /usr/bin/env node
 /**
- * fill vars: host, port, token
- * record to 'pdns-config.json'
+ * create 
+ * pdns-config.json << ns1, ns2, host, port, token
+ * rest-config.json << port, token
  */
 const fs = require('fs');
 const readline = require('readline');
-const CONFIG = 'pdns-config.json';
+const PDNS_CONFIG = 'pdns-config.json';
+const REST_CONFIG = 'rest-config.json';
 
+new Promise(resolve=>resolve())
 
-// check quiet -> auto set
-if (process.argv.indexOf("quiet")>=0) {
-    
-}
-
-// default params
-let params = {
+.then(() => ({ // substitution's are handled by subst()
     domain: 'example.domain', 
     ns1: 'ns1.${domain}',
     ns2: 'ns2.${domain}',
     host: '${ns1}', 
     port: 8081,
     token: ''
-};
+}))
+.then(query('Enter you domain name', 'domain'))
+.then(query('Enter primary name server address', 'ns1'))
+.then(query('Enter secondary name server address', 'ns2'))
+.then(query('Enter HTTP access server name', 'host'))
+.then(query('Http access port', 'port'))
+.then(query('Access token', 'token'))
+.then(params => save(params, PDNS_CONFIG))
+.then(() => console.log('PowerDNS server access config is saved to ' + PDNS_CONFIG))
 
-queries([
-    ['Enter you domain name', 'domain'],
-    ['Enter primary name server address', 'ns1'],
-    ['Enter secondary name server address', 'ns2'],
-    ['Enter Http access server name', 'host'],
-    ['Http access port', 'port'],
-    ['Access token', 'token'],
-    
-], () => {
-    saveJson(CONFIG, params, error => {
-        if (error) console.error(error);
-        console.log('REST server config is saved to ' + CONFIG);
-    });
+.then(() => ({
+    answer: 'yes'
+}))
+.then(query('Configure REST server?', 'answer'))
+.then(result => new Promise((resolve, reject) => (result.answer=='yes'? resolve(): reject())))
+
+.then(() => ({
+    host: 'localhost',
+    port: 8082,
+    token: ''
+}))
+.then(query('Enter you host name', 'host'))
+.then(query('Http access port', 'port'))
+.then(query('Access token', 'token'))
+.then(params => save(params, REST_CONFIG))
+.then(() => console.log('REST server config is saved to ' + REST_CONFIG))
+.catch(error => {
+    if (error) console.error(error)
 })
 
 
-function queries(list, cb) {
-    let query = list.shift();
-    if (!query){
-        if (cb) cb();
-        return;
-    }
-    
-    let rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout
-    });
-    let defValue = subst(params[query[1]], params);
-    rl.question(query[0] + ' [' + defValue + ']:', answer => {
-        rl.close();
-        
-        params[query[1]] = answer ||defValue;
-        queries(list, cb)
-    });
-}
 
-function saveConf(from, to, params, cb_error) {
-    fs.readFile(from, 'utf8', (error, data) => {
-        if (error) {
-            cb_error(error);
-            return;
-        }
-        
-        data = subst(data, params);
-        fs.writeFile(to, data, error => {
-            if (error) {
-                cb_error(error);
-                return;
-            }
-            cb_error();
+// --------------------------
+function query(title, pname ) {
+    return function(params) {
+        return new Promise(resolve => {
+            let defValue = subst(params[pname], params);
+            
+            let rl = readline.createInterface({
+                input: process.stdin,
+                output: process.stdout
+            })
+            
+            rl.question(title + ' [' + defValue + ']:', answer => {
+                rl.close();
+                params[pname] = answer ||defValue;
+                resolve(params)
+            })
         })
-    })
+    }
 }
 
-function saveJson(path, data, cb_error) {
-    if (typeof data !='string') {
-        data = JSON.stringify(data, 0, '    ');
-    }
-    
-    fs.writeFile(path, data, error => {
-        if (error) {
-            cb_error(error);
-            return;
+function save(data, path) {
+    return new Promise((resolve,reject) => {
+        if (typeof data !='string') {
+            data = JSON.stringify(data, 0, '    ');
         }
-        cb_error();
+        
+        fs.writeFile(path, data, error => {
+            if (error)
+                reject(error)
+            else
+                resolve();
+        })
     })
 }
 

@@ -11,7 +11,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "rest": "node tools/rest.server.js --port 3000",
+    "rest": "node tools/rest.server.js --port 8082",
     "init": "node tools/init.script.js",
     "test": "node specs/pdns-test.js",
     "lookup": "node specs/pdns-bulk.js"

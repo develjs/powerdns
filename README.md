@@ -32,11 +32,6 @@ PowerDNS documentation:
     # MySQL password: 1234	
     sudo apt-get install pdns-backend-mysql
 
-    # this command my raise an error, because port :53 is busy
-    # stop default DNS resolver for successful run PowerDNS
-    sudo systemctl disable systemd-resolved.service
-    sudo systemctl stop systemd-resolved
-
     # enable REST API service
     # see also:  https://doc.powerdns.com/md/httpapi/README/
 
@@ -63,6 +58,8 @@ PowerDNS documentation:
     # other options
     slave=no
     daemon=yes
+    # set listening interface, to avoid conflict with systemd-resolved
+    local-address=192.168.1.1
 
     # re-start PowerDNS
     sudo service pdns start
@@ -70,12 +67,6 @@ PowerDNS documentation:
     sudo service pdns restart
     # check status
     sudo service pdns status
-
-    # create main zone - need for dns resolving
-    sudo pdnsutil create-zone example.com ns1.example.com
-    sudo pdnsutil add-record example.com ns1 A 192.168.1.1
-    sudo pdnsutil add-record example.com ns2 A 192.168.1.2
-    sudo pdnsutil set-kind example.com slave
 
     # Errors:
     sudo: unable to resolve host ip-172-12-34-56: Resource temporarily unavailable
@@ -100,10 +91,6 @@ PowerDNS documentation:
     # MySQL password: 1234	
     sudo apt-get install pdns-backend-mysql
 
-    # stop default resolver for run powerdns
-    sudo systemctl disable systemd-resolved.service
-    sudo systemctl stop systemd-resolved
-
     # disable master config in
     sudo nano /etc/powerdns/pdns.d/bind.conf
     #bind-config=/etc/powerdns/named.conf
@@ -113,6 +100,8 @@ PowerDNS documentation:
     slave=yes
     slave-cycle-interval=60
     disable-axfr=yes
+    # set listening interface, to avoid conflict with systemd-resolved
+    local-address=192.168.1.2
     
     # enable REST API access
     api=yes

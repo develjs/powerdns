@@ -12,27 +12,30 @@
  * deleteZone(name)
  * 
  */
-const BASE_URL = 'http://localhost:3000',
-    config = require('../pdns-config.json'), // only for check
-    TEST_ZONES = require('./domains');
+const 
+    pdns_config = require('../pdns-config.json'), // only for check
+    rest_config = require('../rest-config.json'), 
+    TEST_ZONES = require('./domains'),
+    BASE_URL = 'http://' + (rest_config.host || 'localhost') + ':' + (rest_config.port || 8082);
+
 
 const RestDNS = require('../lib/rest-wrap');
 const {echo, nslookup} = require('./misc');
 
-let rest_dns = new RestDNS(BASE_URL)
+let rest_dns = new RestDNS(BASE_URL, rest_config.token)
 
 let run = new Promise(resolve => resolve())
 
 // create all CNAME from zones
 run = TEST_ZONES.reduce((next, el) => next
-    .then(echo(rest_dns, rest_dns.createDomain, el.domain, el.ip))
-    .then(echo(rest_dns, rest_dns.createCname,  el.domain, 'www'))
+    .then(echo(rest_dns, rest_dns.createDomain, el.domain, el.ip)).then(console.log)
+    .then(echo(rest_dns, rest_dns.createCname,  el.domain, 'www')).then(console.log)
 , run);
 
 // check
 run = TEST_ZONES.reduce((next, el) => next
-    .then(echo(this, nslookup, el.domain, config.ns1)).then(console.log)
-    .then(echo(this, nslookup, 'www.' + el.domain, config.ns2)).then(console.log)
+    .then(echo(this, nslookup, el.domain, pdns_config.ns1)).then(console.log)
+    .then(echo(this, nslookup, 'www.' + el.domain, pdns_config.ns2)).then(console.log)
 , run);
 
 // remove
