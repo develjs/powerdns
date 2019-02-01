@@ -138,6 +138,7 @@ PowerDNS documentation:
 
 ## Sources
 pdns-config.json  - PowerDNS access configuration
+rest-config.json  - RestServer access configuration
 
 /lib                    - libraries  
 /lib/powerdns.js        - main library to access any PowerDNS server by native REST API  
@@ -152,6 +153,6 @@ pdns-config.json  - PowerDNS access configuration
 /specs/misc.js          - miscellaneous helper functions  
 
 /tools                  - help tools  
-/tools/init.script.js   - init script for create pdns-config.json
+/tools/init.script.js   - init script for create pdns-config.json  
 /tools/rest.server.js   - simple express server for run rest router  
 /tools/cleandns.sh      - PowerDNS slave cleanup script, remove domains deleted from master  

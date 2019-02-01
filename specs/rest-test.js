@@ -16,7 +16,7 @@ const
     pdns_config = require('../pdns-config.json'), // only for check
     rest_config = require('../rest-config.json'), 
     TEST_ZONES = require('./domains'),
-    BASE_URL = 'http://' + (rest_config.host || 'localhost') + ':' + (rest_config.port || 8082);
+    BASE_URL = 'http://' + (rest_config.host || 'localhost') + ':' + (rest_config.port || 8082)+ '/domains';
 
 
 const RestDNS = require('../lib/rest-wrap');
@@ -28,17 +28,47 @@ let run = new Promise(resolve => resolve())
 
 // create all CNAME from zones
 run = TEST_ZONES.reduce((next, el) => next
-    .then(echo(rest_dns, rest_dns.createDomain, el.domain, el.ip)).then(console.log)
-    .then(echo(rest_dns, rest_dns.createCname,  el.domain, 'www')).then(console.log)
+    .then(echo(rest_dns, rest_dns.createDomain, el.domain, el.ip))
+    .then(echo(rest_dns, rest_dns.createAlias,  el.domain, 'www'))
 , run);
 
 // check
 run = TEST_ZONES.reduce((next, el) => next
-    .then(echo(this, nslookup, el.domain, pdns_config.ns1)).then(console.log)
-    .then(echo(this, nslookup, 'www.' + el.domain, pdns_config.ns2)).then(console.log)
+    .then(echo(this, nslookup, el.domain, pdns_config.ns1))
+    .then(echo(this, nslookup, 'www.' + el.domain, pdns_config.ns2))
 , run);
+
+// show all records
+run = TEST_ZONES.reduce((next, el) => next
+    .then(echo(rest_dns, rest_dns.getRecords,  el.domain))
+, run);
+
+// remove alias
+run = TEST_ZONES.reduce((next, el) => next
+    .then(echo(rest_dns, rest_dns.deleteAlias,  el.domain, 'www'))
+, run);
+
+// check deleted
+run = TEST_ZONES.reduce((next, el) => next
+    .then(echo(this, nslookup, 'www.' + el.domain, pdns_config.ns1))
+, run);
+
+/*// get
+run = TEST_ZONES.reduce((next, el) => next
+    .then(echo(rest_dns, rest_dns.getDomainRow, el.domain)).then(res=>console.log(JSON.stringify(res,0,'\t')))
+, run);
+
+// records
+ * createRecord
+ * getRecords
+run = TEST_ZONES.reduce((next, el) => next
+    .then(echo(rest_dns, rest_dns.getAliases, el.domain, {})).then(res=>console.log(JSON.stringify(res, 0, '\t')))
+, run);
+ 
+*/
 
 // remove
 run = TEST_ZONES.reduce((next, el) => next
      .then(echo(rest_dns, rest_dns.deleteDomain, el.domain))
 , run);
+

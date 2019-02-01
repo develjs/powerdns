@@ -15,11 +15,15 @@ module.exports = {
                     reject(error.message || error)
                 }
                 else if (error) {
-                    resolve();
+                    resolve({error: error.message || error});
                 }
                 else {
                     let res = /Name\:\s*(\S+)\s+Address\:\s*(\S+)/im.exec(stdout)
-                    resolve(res && res[2]);
+                    let ip = res && res[2];
+                    if (ip)
+                        resolve({result:'ok', data: ip});
+                    else
+                        resolve({error: 'No result'});
                 }
             })
         })
@@ -46,7 +50,12 @@ module.exports = {
             })
             .then(()=>func.apply(thisArg, args))
             .then(res => {
-                console.log('OK!');
+                console.log((res && res.result && !res.result.error)? 'Ok!': 'Fail');
+                if (res && res.error)
+                    console.error(res.error)
+                if (res && res.data) {
+                    console.log(res.data)
+                }
                 return res;
             })
             .catch(console.error)    
