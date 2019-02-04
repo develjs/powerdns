@@ -28,7 +28,7 @@ let run = new Promise(resolve => resolve())
 
 // create all CNAME from zones
 run = TEST_ZONES.reduce((next, el) => next
-    .then(echo(rest_dns, rest_dns.createDomain, el.domain, el.ip))
+    .then(echo(rest_dns, rest_dns.createZone, el.domain, el.ip))
     .then(echo(rest_dns, rest_dns.createAlias,  el.domain, 'www'))
 , run);
 
@@ -38,10 +38,16 @@ run = TEST_ZONES.reduce((next, el) => next
     .then(echo(this, nslookup, 'www.' + el.domain, pdns_config.ns2))
 , run);
 
-// show all records
+/* // show all records
 run = TEST_ZONES.reduce((next, el) => next
-    .then(echo(rest_dns, rest_dns.getRecords,  el.domain))
+    .then(echo(rest_dns, rest_dns.getRecords,  el.domain, {type:'CNAME'}))
+, run);*/
+
+// get alias list
+run = TEST_ZONES.reduce((next, el) => next
+    .then(echo(rest_dns, rest_dns.getAliases, el.domain))
 , run);
+
 
 // remove alias
 run = TEST_ZONES.reduce((next, el) => next
@@ -53,22 +59,8 @@ run = TEST_ZONES.reduce((next, el) => next
     .then(echo(this, nslookup, 'www.' + el.domain, pdns_config.ns1))
 , run);
 
-/*// get
-run = TEST_ZONES.reduce((next, el) => next
-    .then(echo(rest_dns, rest_dns.getDomainRow, el.domain)).then(res=>console.log(JSON.stringify(res,0,'\t')))
-, run);
-
-// records
- * createRecord
- * getRecords
-run = TEST_ZONES.reduce((next, el) => next
-    .then(echo(rest_dns, rest_dns.getAliases, el.domain, {})).then(res=>console.log(JSON.stringify(res, 0, '\t')))
-, run);
- 
-*/
-
 // remove
 run = TEST_ZONES.reduce((next, el) => next
-     .then(echo(rest_dns, rest_dns.deleteDomain, el.domain))
+     .then(echo(rest_dns, rest_dns.deleteZone, el.domain))
 , run);
 

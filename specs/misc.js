@@ -54,7 +54,10 @@ module.exports = {
                 if (res && res.error)
                     console.error(res.error)
                 if (res && res.data) {
-                    console.log(res.data)
+                    if (typeof res.data != 'object')
+                        console.log(res.data)
+                    else
+                        console.log(JSON.stringify(res.data))
                 }
                 return res;
             })
