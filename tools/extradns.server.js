@@ -4,7 +4,7 @@
 const express = require('express'),
     pdns_config = require('../pdns-config.json'),
     rest_config = require('../rest-config.json'),
-    restRouter = require('../lib/rest-router');
+    ExtraDNSRouter = require('../lib/extra-dns-router');
 
 let PORT = process.argv.indexOf("--port")>0? process.argv[process.argv.indexOf("--port")+1]: rest_config.port || 8082;
 
@@ -19,7 +19,7 @@ if (rest_config.token)
         }
         next();
     })
-app.use('/domains', restRouter(pdns_config));
+app.use('/domains', ExtraDNSRouter(pdns_config));
 
 app.listen(PORT, () => {
     console.log('Example app listening on port ' + PORT);

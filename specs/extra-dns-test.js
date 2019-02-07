@@ -19,10 +19,10 @@ const
     BASE_URL = 'http://' + (rest_config.host || 'localhost') + ':' + (rest_config.port || 8082)+ '/domains';
 
 
-const RestDNS = require('../lib/rest-wrap');
+const ExtraDNSClient = require('../lib/extra-dns-client');
 const {echo, nslookup} = require('./misc');
 
-let rest_dns = new RestDNS( BASE_URL, {headers: {'X-API-Key': rest_config.token}} )
+let rest_dns = new ExtraDNSClient( BASE_URL, {headers: {'X-API-Key': rest_config.token}} )
 
 let run = new Promise(resolve => resolve())
 

@@ -11,10 +11,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "rest": "node tools/rest.server.js --port 8082",
+    "rest": "node tools/extradns.server.js --port 8082",
     "init": "node tools/init.script.js",
-    "test": "node specs/pdns-test.js",
-    "lookup": "node specs/pdns-bulk.js"
+    "test": "node specs/extra-dns-test.js",
+    "lookup": "node specs/bulk-lookup.js"
   },
   "author": "develjs@gmail.com",
   "license": "MIT",
