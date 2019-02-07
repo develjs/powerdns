@@ -22,7 +22,7 @@ const
 const RestDNS = require('../lib/rest-wrap');
 const {echo, nslookup} = require('./misc');
 
-let rest_dns = new RestDNS(BASE_URL, rest_config.token)
+let rest_dns = new RestDNS( BASE_URL, {headers: {'X-API-Key': rest_config.token}} )
 
 let run = new Promise(resolve => resolve())
 
