@@ -1,7 +1,7 @@
 # Node.js wrapper for PowerDNS REST API
 
-You can you direct access lib as sample to PowerDNS access (/lib/powerdns.js).  
-But also there is a simple wrapper express server in this repo, which routing queries to PowerDNS Rest. It controls as slave as master.  
+You can direct access lib as sample to PowerDNS access (/lib/powerdns.js).  
+But also there is a simple wrapper express server in this repo, which routing queries to PowerDNS Rest. It controls both slave and master.  
 
 
 ## Init server params
